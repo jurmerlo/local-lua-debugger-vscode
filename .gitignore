@@ -4,3 +4,4 @@ debugger/*.lua.map
 extension/**/*.js
 extension/**/*.js.map
 node_modules
+!lldebugger.lua
