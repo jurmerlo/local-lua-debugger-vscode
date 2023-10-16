@@ -34,8 +34,8 @@
 		},
 		{
 			"label": "Clean",
-			"type": "npm",
-			"script": "clean",
+			"type": "shell",
+			"command": "rm debugger/*.lua; rm debugger/*.lua.map; rm extension/*.js; rm extension/*.js.map; rm *.vsix",
 			"problemMatcher": []
 		},
 		{

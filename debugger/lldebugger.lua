@@ -608,6 +608,7 @@ return ____exports
 ["send"] = function(...) 
 local ____exports = {}
 local ____luafuncs = require("luafuncs")
+local luaAssert = ____luafuncs.luaAssert
 local luaError = ____luafuncs.luaError
 local luaLenMetamethodSupported = ____luafuncs.luaLenMetamethodSupported
 local luaRawLen = ____luafuncs.luaRawLen
@@ -793,6 +794,33 @@ do
                     }
                 end
             end
+        end
+        send(dbgProperties)
+    end
+    local function getUpvalues(info)
+        local ups = {}
+        if (not info.nups) or (not info.func) then
+            return ups
+        end
+        for index = 1, info.nups do
+            local name, val = debug.getupvalue(info.func, index)
+            ups[luaAssert(name)] = val
+        end
+        return ups
+    end
+    function Send.functionUpvalues(f)
+        local dbgProperties = {
+            tag = "$luaDebug",
+            type = "properties",
+            properties = Format.makeExplicitArray()
+        }
+        local upvalues = getUpvalues(
+            debug.getinfo(f, "fu")
+        )
+        for key, val in pairs(upvalues) do
+            local name = getPrintableValue(key)
+            local dbgVar = buildVariable(name, val)
+            table.insert(dbgProperties.properties, dbgVar)
         end
         send(dbgProperties)
     end
@@ -1490,8 +1518,10 @@ do
                                 tonumber(first),
                                 tonumber(count)
                             )
+                        elseif type(r) == "function" then
+                            Send.functionUpvalues(r)
                         else
-                            Send.error(("Expression \"" .. mappedExpression) .. "\" is not a table")
+                            Send.error(("Expression \"" .. mappedExpression) .. "\" is not a table nor a function")
                         end
                     else
                         Send.error(r)
@@ -1553,7 +1583,7 @@ do
         return true
     end
     local function comparePaths(a, b)
-        return Path.getAbsolute(a) == Path.getAbsolute(b)
+        return Path.getAbsolute(a):lower() == Path.getAbsolute(b):lower()
     end
     local debugHookStackOffset = 2
     local breakpointLookup = Breakpoint.getLookup()
@@ -1846,6 +1876,23 @@ do
                 end
             end
         end
+        debug.setmetatable(
+            function()
+            end,
+            {
+                __index = function(self, key)
+                    local info = debug.getinfo(self, "fu")
+                    if not info then
+                        return nil
+                    end
+                    local val = getUpvalues(info).vars[key]
+                    if not val then
+                        return nil
+                    end
+                    return val.val
+                end
+            }
+        )
     end
     function Debugger.clearHook()
         while #hookStack > 0 do
@@ -1862,6 +1909,11 @@ do
                 debug.sethook(thread)
             end
         end
+        debug.setmetatable(
+            function()
+            end,
+            nil
+        )
     end
     local breakInCoroutinesEnv = "LOCAL_LUA_DEBUGGER_BREAK_IN_COROUTINES"
     local breakInCoroutines = os.getenv(breakInCoroutinesEnv) == "1"
