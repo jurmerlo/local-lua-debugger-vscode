@@ -846,7 +846,7 @@ export namespace Debugger {
     }
 
     function comparePaths(a: string, b: string) {
-        return Path.getAbsolute(a) === Path.getAbsolute(b);
+        return Path.getAbsolute(a).lower() === Path.getAbsolute(b).lower();
     }
 
     const debugHookStackOffset = 2;
