@@ -20,7 +20,7 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-import {DebugProtocol} from "vscode-debugprotocol";
+import {DebugProtocol} from "@vscode/debugprotocol";
 import {
     Breakpoint,
     InitializedEvent,
@@ -35,7 +35,7 @@ import {
     Variable,
     Handles,
     ThreadEvent
-} from "vscode-debugadapter";
+} from "@vscode/debugadapter";
 import * as childProcess from "child_process";
 import * as path from "path";
 import * as fs from "fs";

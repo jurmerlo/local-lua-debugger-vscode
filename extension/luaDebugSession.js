@@ -31,7 +31,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LuaDebugSession = void 0;
-const vscode_debugadapter_1 = require("vscode-debugadapter");
+const debugadapter_1 = require("@vscode/debugadapter");
 const childProcess = require("child_process");
 const path = require("path");
 const fs = require("fs");
@@ -100,7 +100,7 @@ function parseFrameId(frameId) {
 function makeFrameId(threadId, frame) {
     return (threadId - 1) * maxStackCount + (frame - 1);
 }
-class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
+class LuaDebugSession extends debugadapter_1.LoggingDebugSession {
     constructor() {
         super("lldebugger-log.txt");
         this.fileBreakpoints = {};
@@ -108,7 +108,7 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
         this.debugPipe = null;
         this.outputText = "";
         this.messageHandlerQueue = [];
-        this.variableHandles = new vscode_debugadapter_1.Handles(3 /* Global */ + 1);
+        this.variableHandles = new debugadapter_1.Handles(3 /* Global */ + 1);
         this.breakpointsPending = false;
         this.pendingScripts = null;
         this.pendingIgnorePatterns = null;
@@ -130,7 +130,7 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
         response.body.supportsTerminateRequest = true;
         response.body.supportsConditionalBreakpoints = true;
         this.sendResponse(response);
-        this.sendEvent(new vscode_debugadapter_1.InitializedEvent());
+        this.sendEvent(new debugadapter_1.InitializedEvent());
     }
     configurationDoneRequest(response, args) {
         this.showOutput("configurationDoneRequest", "request" /* Request */);
@@ -286,7 +286,7 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
             }
             this.fileBreakpoints[filePath] = args.breakpoints;
             const breakpoints = (typeof args.breakpoints !== "undefined")
-                ? args.breakpoints.map(breakpoint => new vscode_debugadapter_1.Breakpoint(true, breakpoint.line))
+                ? args.breakpoints.map(breakpoint => new debugadapter_1.Breakpoint(true, breakpoint.line))
                 : [];
             response.body = { breakpoints };
             this.sendResponse(response);
@@ -301,14 +301,14 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
                 const activeThreadIds = [...this.activeThreads.keys()];
                 for (const activeId of activeThreadIds) {
                     if (!msg.threads.some(({ id }) => activeId === id)) {
-                        this.sendEvent(new vscode_debugadapter_1.ThreadEvent("exited", activeId));
+                        this.sendEvent(new debugadapter_1.ThreadEvent("exited", activeId));
                         this.activeThreads.delete(activeId);
                     }
                 }
                 //Create new threads
                 const newThreads = msg.threads.filter(({ id }) => !this.activeThreads.has(id));
                 for (const { id, name } of newThreads) {
-                    this.activeThreads.set(id, new vscode_debugadapter_1.Thread(id, name));
+                    this.activeThreads.set(id, new debugadapter_1.Thread(id, name));
                 }
                 response.body = { threads: [...this.activeThreads.values()] };
             }
@@ -336,7 +336,7 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
                     if (typeof frame.mappedLocation !== "undefined") {
                         const mappedPath = this.resolvePath(frame.mappedLocation.source);
                         if (typeof mappedPath !== "undefined") {
-                            source = new vscode_debugadapter_1.Source(path.basename(mappedPath), mappedPath);
+                            source = new debugadapter_1.Source(path.basename(mappedPath), mappedPath);
                             line = frame.mappedLocation.line;
                             column = frame.mappedLocation.column;
                         }
@@ -344,7 +344,7 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
                     //Un-mapped source
                     const sourcePath = this.resolvePath(frame.source);
                     if (typeof source === "undefined" && typeof sourcePath !== "undefined") {
-                        source = new vscode_debugadapter_1.Source(path.basename(frame.source), sourcePath);
+                        source = new debugadapter_1.Source(path.basename(frame.source), sourcePath);
                     }
                     //Function name
                     let frameFunc = typeof frame.func !== "undefined" ? frame.func : "???";
@@ -352,7 +352,7 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
                         frameFunc += ` ${frame.source}`;
                     }
                     const frameId = makeFrameId(args.threadId, i + 1);
-                    const stackFrame = new vscode_debugadapter_1.StackFrame(frameId, frameFunc, source, line, column);
+                    const stackFrame = new debugadapter_1.StackFrame(frameId, frameFunc, source, line, column);
                     stackFrame.presentationHint = typeof sourcePath === "undefined" ? "subtle" : "normal";
                     frames.push(stackFrame);
                 }
@@ -371,9 +371,9 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
             yield this.waitForCommandResponse(`thread ${threadId}`);
             yield this.waitForCommandResponse(`frame ${frame}`);
             const scopes = [
-                new vscode_debugadapter_1.Scope("Locals", 1 /* Local */, false),
-                new vscode_debugadapter_1.Scope("Upvalues", 2 /* Upvalue */, false),
-                new vscode_debugadapter_1.Scope("Globals", 3 /* Global */, false)
+                new debugadapter_1.Scope("Locals", 1 /* Local */, false),
+                new debugadapter_1.Scope("Upvalues", 2 /* Upvalue */, false),
+                new debugadapter_1.Scope("Globals", 3 /* Global */, false)
             ];
             response.body = { scopes };
             this.sendResponse(response);
@@ -626,15 +626,15 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
             ? variable.length + 1
             : variable.length;
         if (variable.type === "table" || variable.type === "function") {
-            return new vscode_debugadapter_1.Variable(name, valueStr, ref, indexedVariables, 1);
+            return new debugadapter_1.Variable(name, valueStr, ref, indexedVariables, 1);
         }
         else {
-            return new vscode_debugadapter_1.Variable(name, valueStr, ref, indexedVariables);
+            return new debugadapter_1.Variable(name, valueStr, ref, indexedVariables);
         }
     }
     assert(value, message = "assertion failed") {
         if (value === null || typeof value === "undefined") {
-            this.sendEvent(new vscode_debugadapter_1.OutputEvent(message));
+            this.sendEvent(new debugadapter_1.OutputEvent(message));
             throw new Error(message);
         }
         return value;
@@ -751,7 +751,7 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
             }
             if (msg.breakType === "error") {
                 this.showOutput(msg.message, "error" /* Error */);
-                const evt = new vscode_debugadapter_1.StoppedEvent("exception", msg.threadId, msg.message);
+                const evt = new debugadapter_1.StoppedEvent("exception", msg.threadId, msg.message);
                 evt.body.allThreadsStopped = true;
                 this.sendEvent(evt);
                 return;
@@ -762,7 +762,7 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
                 this.assert(this.sendCommand("autocont"));
             }
             else {
-                const evt = new vscode_debugadapter_1.StoppedEvent("breakpoint", msg.threadId);
+                const evt = new debugadapter_1.StoppedEvent("breakpoint", msg.threadId);
                 evt.body.allThreadsStopped = true;
                 this.sendEvent(evt);
             }
@@ -811,7 +811,7 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
             this.outputText = "";
         }
         this.showOutput(`debugging ended: ${result}`, category);
-        this.sendEvent(new vscode_debugadapter_1.TerminatedEvent());
+        this.sendEvent(new debugadapter_1.TerminatedEvent());
     }
     sendCommand(cmd) {
         var _a;
@@ -842,13 +842,13 @@ class LuaDebugSession extends vscode_debugadapter_1.LoggingDebugSession {
             return;
         }
         else if (category === "stdout" /* StdOut */ || category === "stderr" /* StdErr */) {
-            this.sendEvent(new vscode_debugadapter_1.OutputEvent(msg, category));
+            this.sendEvent(new debugadapter_1.OutputEvent(msg, category));
         }
         else if (category === "error" /* Error */) {
-            this.sendEvent(new vscode_debugadapter_1.OutputEvent(`\n[${category}] ${msg}\n`, "stderr"));
+            this.sendEvent(new debugadapter_1.OutputEvent(`\n[${category}] ${msg}\n`, "stderr"));
         }
         else if (typeof this.config !== "undefined" && this.config.verbose === true) {
-            this.sendEvent(new vscode_debugadapter_1.OutputEvent(`\n[${category}] ${msg}\n`));
+            this.sendEvent(new debugadapter_1.OutputEvent(`\n[${category}] ${msg}\n`));
         }
     }
     waitForConfiguration() {
