@@ -3,5 +3,9 @@
 	"eslint.workingDirectories": [
 		"./debugger",
 		"./extension"
+	],
+	"cSpell.words": [
+		"debugadapter",
+		"debugprotocol"
 	]
 }

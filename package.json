@@ -35,7 +35,7 @@
         "publish": "npm run bundle && vsce publish"
     },
     "dependencies": {
-        "vscode-debugadapter": "^1.51.0"
+        "@vscode/debugadapter": "^1.64.0"
     },
     "devDependencies": {
         "@types/node": "^16.4.13",
@@ -45,7 +45,7 @@
         "eslint": "^7.32.0",
         "typescript": "^4.3.5",
         "typescript-to-lua": "^1.1.1",
-        "vsce": "^2.11.0"
+        "@vscode/vsce": "^2.23.0"
     },
     "main": "./extension/extension.js",
     "engines": {
