@@ -3,6 +3,12 @@
 A simple Lua debugger which requires no additional dependencies.
 
 ---
+
+Forked from [tomblind/local-lua-debugger-vscode](https://github.com/tomblind/local-lua-debugger-vscode) to maintain the extension, until the main repo will be maintained again.
+
+**Disclaimer**: I'm not the original author of this extension, I'm just trying to maintaining it.
+
+---
 ## Notice of Breaking Change
 Beginning in version 0.3.0, projects which use sourcemaps to debug code transpiled from another language (such as TypescriptToLua), **must** specify the [`scriptFiles`](#scriptFiles) launch configuration option in order to use breakpoints in the original source files. This allows these to be resolved at startup instead of at runtime which allows for a significant performance increase.
 
