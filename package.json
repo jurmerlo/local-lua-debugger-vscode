@@ -1,7 +1,7 @@
 {
     "name": "local-lua-debugger-vscode",
     "publisher": "ismoh",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "description": "Local Lua Debugger - simple Lua debugger with no dependencies - forked from https://github.com/tomblind/local-lua-debugger-vscode",
     "displayName": "Local Lua Debugger",
     "icon": "resources/Lua-Logo_128x128.png",
