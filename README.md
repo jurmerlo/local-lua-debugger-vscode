@@ -4,9 +4,10 @@ A simple Lua debugger which requires no additional dependencies.
 
 ---
 
-Forked from [tomblind/local-lua-debugger-vscode](https://github.com/tomblind/local-lua-debugger-vscode) to maintain the extension, until the main repo will be maintained again.
+## Disclaimer
 
-**Disclaimer**: I'm not the original author of this extension, I'm just trying to maintaining it.\
+> Forked from [tomblind/local-lua-debugger-vscode](https://github.com/tomblind/local-lua-debugger-vscode) to maintain the extension, until the main repo will be maintained again. <br>
+> **Disclaimer**: I'm not the original author of this extension, I'm just trying to maintaining it.\
 You can compare the changes between the original and this fork [here](https://github.com/tomblind/local-lua-debugger-vscode/compare/master...Ismoh:local-lua-debugger-vscode:master).
 
 ---

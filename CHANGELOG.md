@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.3.5
+
+- Fixed `"Failed to find extension path"`
+
 ## Version 0.3.4
 
 - Fixed breakpoints not being hit, see original [pull request](https://github.com/tomblind/local-lua-debugger-vscode/pull/71) and forked [one](https://github.com/Ismoh/local-lua-debugger-vscode/pull/3)

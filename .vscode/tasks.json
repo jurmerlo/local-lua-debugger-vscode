@@ -68,6 +68,14 @@
 			],
 			"label": "Lint",
 			"detail": "npm run lint-extensions"
-		}
+		},
+		{
+			"label": "Publish",
+			"type": "npm",
+			"script": "publish",
+			"problemMatcher": [
+				"$tsc"
+			]
+		},
 	]
 }
