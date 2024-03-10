@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install vsce
-        run: npm install -g vsce
+        run: npm install -g @vscode/vsce
       - name: Install npm
         run: npm install
       - name: Publish to VSCode Marketplace
