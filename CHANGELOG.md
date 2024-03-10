@@ -5,7 +5,7 @@
 - Add new VSCode marketplace release/publish
 - Add GitHub Actions CI/CD for automatic releases, when creating a new tag
 - Add VSCode task for creating a new release
-- Update publisher name to `ismohgames`
+- Update publisher name to `ismoh-games`
 - Update `local-lua-debugger-vscode` to `second-local-lua-debugger-vscode` to avoid conflicts with the original extension
 
 ## Version 0.3.5
