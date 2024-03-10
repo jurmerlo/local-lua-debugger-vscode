@@ -2,8 +2,8 @@
     "name": "second-local-lua-debugger-vscode",
     "publisher": "ismohgames",
     "version": "0.3.6",
-    "description": "Local Lua Debugger - simple Lua debugger with no dependencies - forked from https://github.com/tomblind/local-lua-debugger-vscode",
-    "displayName": "Local Lua Debugger",
+    "description": "Second Local Lua Debugger - simple Lua debugger with no dependencies - forked from https://github.com/tomblind/local-lua-debugger-vscode",
+    "displayName": "Second Local Lua Debugger",
     "icon": "resources/Lua-Logo_128x128.png",
     "repository": {
         "type": "github",
@@ -57,7 +57,7 @@
     "contributes": {
         "configuration": [
             {
-                "title": "Local Lua Debugger",
+                "title": "Second Local Lua Debugger",
                 "properties": {
                     "lua-local.interpreter": {
                         "type": "string",
@@ -75,7 +75,7 @@
         "debuggers": [
             {
                 "type": "lua-local",
-                "label": "Local Lua Debugger",
+                "label": "Second Local Lua Debugger",
                 "program": "./extension/debugAdapter.js",
                 "runtime": "node",
                 "languages": [

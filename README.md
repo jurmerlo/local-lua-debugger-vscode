@@ -1,4 +1,4 @@
-# Local Lua Debugger for Visual Studio Code
+# `Second` Local Lua Debugger for Visual Studio Code
 
 A simple Lua debugger which requires no additional dependencies.
 
