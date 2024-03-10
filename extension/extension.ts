@@ -97,7 +97,7 @@ const configurationProvider: vscode.DebugConfigurationProvider = {
             return abortLaunch("No path for debugger");
         }
 
-        const extension = vscode.extensions.getExtension("ismoh.local-lua-debugger-vscode");
+        const extension = vscode.extensions.getExtension("ismohgames.local-lua-debugger-vscode");
         if (typeof extension === "undefined") {
             return abortLaunch("Failed to find extension path");
         }

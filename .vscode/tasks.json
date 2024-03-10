@@ -1,81 +1,76 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"label": "Build Debugger",
-			"type": "npm",
-			"group": "build",
-			"script": "build-debugger",
-			"problemMatcher": [
-				"$tsc"
-			]
-		},
-		{
-			"label": "Build Extension",
-			"type": "npm",
-			"group": "build",
-			"script": "build-extension",
-			"problemMatcher": [
-				"$tsc"
-			]
-		},
-		{
-			"label": "Bundle",
-			"type": "npm",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"script": "bundle",
-			"problemMatcher": [
-				"$tsc"
-			],
-			"dependsOn": "Clean"
-		},
-		{
-			"label": "Clean",
-			"type": "shell",
-			"command": "rm debugger/*.lua; rm debugger/*.lua.map; rm extension/*.js; rm extension/*.js.map; rm *.vsix",
-			"problemMatcher": []
-		},
-		{
-			"label": "Build Debugger (TSTL HEAD)",
-			"type": "shell",
-			"group": "build",
-			"command": "node",
-			"args": [
-				"../TypescriptToLua/dist/tstl.js",
-				"-p",
-				"debugger"
-			],
-			"problemMatcher": [
-				"$tsc"
-			]
-		},
-		{
-			"label": "Build",
-			"type": "npm",
-			"script": "build",
-			"problemMatcher": [
-				"$tsc"
-			]
-		},
-		{
-			"type": "npm",
-			"script": "lint",
-			"problemMatcher": [
-				"$eslint-stylish"
-			],
-			"label": "Lint",
-			"detail": "npm run lint-extensions"
-		},
-		{
-			"label": "Publish",
-			"type": "npm",
-			"script": "publish",
-			"problemMatcher": [
-				"$tsc"
-			]
-		},
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Debugger",
+      "type": "npm",
+      "group": "build",
+      "script": "build-debugger",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Build Extension",
+      "type": "npm",
+      "group": "build",
+      "script": "build-extension",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Bundle",
+      "type": "npm",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "script": "bundle",
+      "problemMatcher": ["$tsc"],
+      "dependsOn": "Clean"
+    },
+    {
+      "label": "Clean",
+      "type": "shell",
+      "command": "rm debugger/*.lua; rm debugger/*.lua.map; rm extension/*.js; rm extension/*.js.map; rm *.vsix",
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Debugger (TSTL HEAD)",
+      "type": "shell",
+      "group": "build",
+      "command": "node",
+      "args": ["../TypescriptToLua/dist/tstl.js", "-p", "debugger"],
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Build",
+      "type": "npm",
+      "script": "build",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": ["$eslint-stylish"],
+      "label": "Lint",
+      "detail": "npm run lint-extensions"
+    },
+    {
+      "label": "Publish",
+      "type": "npm",
+      "script": "publish",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Create new release",
+      "type": "shell",
+      "command": "git tag -a release-v${input:release-version} -m \"Release v${input:release-version}\"; git push origin release-v${input:release-version}; git push origin --tags",
+      "problemMatcher": ["$tsc"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "release-version",
+      "type": "promptString",
+      "description": "Enter the version number for the release, example: 0.0.1"
+    }
+  ]
 }
