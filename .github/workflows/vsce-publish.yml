@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install vsce
+        run: npm install -g vsce
       - name: Install npm
         run: npm install
       - name: Publish to VSCode Marketplace
