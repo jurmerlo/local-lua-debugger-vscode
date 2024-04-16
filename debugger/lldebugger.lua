@@ -1843,7 +1843,7 @@ do
         local args = {...}
         if not v then
             local message = ((args[1] ~= nil) and args[1]) or "assertion failed"
-            breakForError(message, 2, true)
+            breakForError(message, 1, true)
         end
         return v, unpack(args)
     end

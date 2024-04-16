@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.3.7
+
+- fix: handle assert() correctly\
+    Fixes [tomblind#74](https://github.com/tomblind/local-lua-debugger-vscode/issues/74) by starting the trace one level deeper, skipping over `debuggerAssert` as was likely intended.
+
 ## Version 0.3.6
 
 - Add new VSCode marketplace release/publish
