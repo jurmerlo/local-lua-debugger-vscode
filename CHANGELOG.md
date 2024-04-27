@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 0.3.8
+
+- fix: breakpoints don't work if love2d is used with scriptRoots
+    * fixes introduced bug https://github.com/Ismoh/local-lua-debugger-vscode/issues/9
+    * preserving fix for https://github.com/tomblind/local-lua-debugger-vscode/issues/62
+- tests: add new test case for breakpoints with relative paths
+- fix: assert-level-fix applied only to compiled `lldebugger.lua`
+
 ## Version 0.3.7
 
 - fix: handle assert() correctly\
