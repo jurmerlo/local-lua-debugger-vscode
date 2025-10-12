@@ -1042,7 +1042,7 @@ export namespace Debugger {
 
         if (propagate) {
             skipNextBreak = true;
-            luaError(message, level);
+            luaError(err, level);
         }
     }
 

@@ -125,7 +125,7 @@ declare function dofile(this: void, filename?: string): LuaMultiReturn<unknown[]
  *   the `error` function was called. Level 2 points the error to where the function that called `error` was called; and
  *   so on. Passing a level 0 avoids the addition of error position information to the message.
 */
-declare function error(this: void, message: string, level?: number): never;
+declare function error(this: void, message: any, level?: number): never;
 
 /**
  * A global variable (not a function) that holds the global environment (that is, `_G._G = _G`). Lua itself does not use
