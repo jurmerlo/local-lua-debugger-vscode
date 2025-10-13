@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.3.9
+
+- fix: [#25](https://github.com/Ismoh/local-lua-debugger-vscode/issues/25): Change the error wrapper to pass the original error intact ([#26](https://github.com/Ismoh/local-lua-debugger-vscode/pull/26))
+
 ## Version 0.3.8
 
 - fix: breakpoints don't work if love2d is used with scriptRoots
