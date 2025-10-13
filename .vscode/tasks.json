@@ -62,7 +62,7 @@
     {
       "label": "Create new release",
       "type": "shell",
-      "command": "npm install; npm run bundle; git commit -a -m 'Apply changes for new version'; git push; git tag -a release-v${input:release-version} -m 'release-v${input:release-version}'; git push origin release-v${input:release-version}; git push origin --tags",
+      "command": "npm install; npm run bundle; git commit -a -m 'chore: apply changes for new version'; git push; git tag -a release-v${input:release-version} -m 'release-v${input:release-version}'; git push origin release-v${input:release-version}; git push origin --tags",
       "problemMatcher": ["$tsc"]
     }
   ],
