@@ -27,6 +27,7 @@ export interface SourceLineMapping {
     sourceIndex: number;
     sourceLine: number;
     sourceColumn: number;
+    column: number;
 }
 
 export interface SourceMap {
@@ -181,10 +182,10 @@ export namespace SourceMap {
 
                 const lineMapping = sourceMap.mappings[line];
                 if (!lineMapping
-                    || sourceLine < lineMapping.sourceLine
+                    || (sourceLine < lineMapping.sourceLine && column < lineMapping.column)
                     || (sourceLine === lineMapping.sourceLine && sourceColumn < lineMapping.sourceColumn)
                 ) {
-                    sourceMap.mappings[line] = {sourceIndex, sourceLine, sourceColumn};
+                    sourceMap.mappings[line] = {sourceIndex, sourceLine, sourceColumn, column};
                 }
             }
 

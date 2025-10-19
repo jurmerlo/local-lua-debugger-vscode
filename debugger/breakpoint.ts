@@ -74,7 +74,7 @@ export namespace Breakpoint {
         const [scriptFile, sourceMap] = SourceMap.find(file);
         if (scriptFile && sourceMap) {
             for (const [scriptLine, mapping] of pairs(sourceMap.mappings)) {
-                if (mapping.sourceLine === line) {
+                if (mapping.sourceLine === line && file === sourceMap.sources[mapping.sourceIndex]) {
                     sourceFile = file;
                     file = scriptFile;
                     sourceLine = line;
